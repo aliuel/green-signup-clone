@@ -9,6 +9,9 @@ module.exports = {
         'custom-white': '#F2F2F2',
         'weak-green': '#496766',
         'custom-green': '#133A38'
+      },
+      screens: {
+        'large': '900px'
       }
     },
   },

@@ -1,14 +1,14 @@
 <template>
   <!-- <NavBar /> -->
-  <div id="wrapper" class=" flex flex-col bg-custom-green h-screen pt-[10vw] pl-[10vw] text-custom-white">
+  <div id="wrapper" class=" flex flex-col bg-custom-green h-screen pt-[10vw] pl-[10vw] text-custom-white large:pl-[20vw] large:pt-[10vh]">
     <div @click="back" id="backbutton">
-      <img src="./assets/arrow_back_ios_white_24dp.svg" class="h-[7vw] ml-[-2vw]">
+      <img src="./assets/arrow_back_ios_white_24dp.svg" class="h-[7vw] ml-[-2vw] large:h-[6vh] large:ml-[-9vh]">
     </div>
-    <div id="progressbar" class="mt-[5vw] mb-[4vw]">
-      <div id="bar" class="absolute w-[33vw] bg-weak-green h-[.8vw]"></div>
-      <div ref="bar" id="progress" class="absolute transition-all duration-[.7s] w-[11vw] bg-custom-white h-[.8vw]"></div>
+    <div id="progressbar" class="mt-[5vw] mb-[4vw] large:my-[3vh]">
+      <div id="bar" class="absolute w-[33vw] bg-weak-green h-[.8vw] large:w-[21vh] large:h-[.6vh]"></div>
+      <div ref="bar" id="progress" class="absolute transition-all large:w-[7vh] duration-[.7s] w-[11vw] bg-custom-white h-[.8vw] large:h-[.6vh]"></div>
     </div>
-    <div id="textarea" class=" pl-[10vw] ml-[-10vw]">
+    <div id="textarea">
       <div ref="mail" id="textmail" class="active">
         <h1>What's your e-mail?</h1>
         <p>So we can message you.</p>
@@ -22,12 +22,12 @@
         <p>To keep your account safe</p>
       </div>
     </div>
-    <div id="input" class="mt-[21vw]">
-      <input ref="input" v-model="search" type="text" class=" pb-[2px] text-[5vw] leading-[6vw] font-normal focus:outline-none bg-transparent border-b-2 transition-[border] duration-[.2s] border-custom-white w-[80vw]">
+    <div id="input" class="mt-[21vw] large:mt-[20vh]">
+      <input ref="input" v-model="search" type="text" class=" pb-[2px] text-[5vw] large:text-[3vh] leading-[6vw] large:leading-[4vh] font-normal focus:outline-none bg-transparent border-b-2 transition-[border] duration-[.2s] border-custom-white w-[80vw] large:w-[50vh]">
       <p ref="errorp" class=" transition-all duration-[.2s] opacity-0 text-red-700">{{ error }}</p>
     </div>
-    <button @click="next" class="bg-weak-green w-max rounded-full p-[1vw] mt-[5vw] fixed bottom-6 right-6">
-      <img src="./assets/arrow_forward_white_24dp.svg" class="h-[9vw]">
+    <button @click="next" class="bg-weak-green w-max rounded-full p-[1vw] large:p-[1vh] fixed large:absolute bottom-6 right-6 large:bottom-[51.2vh]">
+      <img src="./assets/arrow_forward_white_24dp.svg" class="h-[9vw] large:h-[3vh]">
     </button>
   </div>
 </template>
@@ -61,8 +61,13 @@ export default {
       if (status == 0) {
         if (EmailValidator.validate(search.value)) {
           user.mail = search.value
-          bar.value.classList.toggle('w-[11vw]')
-          bar.value.classList.toggle('w-[22vw]')
+          if (bar.value.classList.contains('large:w-[7vh]')) {
+            bar.value.classList.toggle('large:w-[7vh]')
+            bar.value.classList.toggle('large:w-[14vh]')
+          } else {
+            bar.value.classList.toggle('w-[11vw]')
+            bar.value.classList.toggle('w-[22vw]')
+          }
           mail.value.classList.toggle('active')
           mail.value.classList.toggle('done')
           name.value.classList.toggle('ready')
@@ -93,8 +98,13 @@ export default {
         if (search.value.length) {
           user.name = search.value
           search.value = ''
-          bar.value.classList.toggle('w-[22vw]')
-          bar.value.classList.toggle('w-[33vw]')
+          if (bar.value.classList.contains('large:w-[14vh]')) {
+            bar.value.classList.toggle('large:w-[14vh]')
+            bar.value.classList.toggle('large:w-[21vh]')
+          } else {
+            bar.value.classList.toggle('w-[22vw]')
+            bar.value.classList.toggle('w-[33vw]')
+          }
           name.value.classList.toggle('active')
           name.value.classList.toggle('done')
           pword.value.classList.toggle('ready')
@@ -144,8 +154,13 @@ export default {
           errorp.value.classList.toggle('opacity-0')
           errorp.value.classList.toggle('opacity-100')
         }
-        bar.value.classList.toggle('w-[33vw]')
-        bar.value.classList.toggle('w-[22vw]')
+        if (bar.value.classList.contains('large:w-[21vh]')) {
+          bar.value.classList.toggle('large:w-[21vh]')
+          bar.value.classList.toggle('large:w-[14vh]')
+        } else {
+          bar.value.classList.toggle('w-[33vw]')
+          bar.value.classList.toggle('w-[22vw]')
+        }
         name.value.classList.toggle('done')
         name.value.classList.toggle('active')
         pword.value.classList.toggle('active')
@@ -159,8 +174,13 @@ export default {
           errorp.value.classList.toggle('opacity-0')
           errorp.value.classList.toggle('opacity-100')
         }
-        bar.value.classList.toggle('w-[22vw]')
-        bar.value.classList.toggle('w-[11vw]')
+        if (bar.value.classList.contains('large:w-[14vh]')) {
+          bar.value.classList.toggle('large:w-[14vh]')
+          bar.value.classList.toggle('large:w-[7vh]')
+        } else {
+          bar.value.classList.toggle('w-[22vw]')
+          bar.value.classList.toggle('w-[11vw]')
+        }
         mail.value.classList.toggle('done')
         mail.value.classList.toggle('active')
         name.value.classList.toggle('active')
@@ -191,6 +211,12 @@ export default {
 
 * {
   font-family: 'Open Sans', sans-serif;
+}
+
+@media (min-width: 900px) {
+  button {
+    left: calc(20vw + 50vh + 2vh) !important;
+  }
 }
 
 *:focus, * {

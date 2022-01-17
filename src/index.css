@@ -8,15 +8,15 @@
     }
 
     #textarea div h1 {
-        @apply text-[7.5vw]
+        @apply text-[7.5vw] large:text-[8vh] large:font-thin
     }
 
     #textarea div p {
-        @apply  w-[80vw] text-[4.5vw] font-thin
+        @apply  w-[80vw] text-[4.5vw] font-thin large:text-[3vh]
     }
 
     .active {
-        @apply left-[10vw]
+        @apply left-[10vw] large:left-[20vw]
     }
 
     .ready {
@@ -24,7 +24,7 @@
     }
 
     .passive {
-        @apply left-[110vh]
+        @apply left-[110vw]
     }
 
     .done {
