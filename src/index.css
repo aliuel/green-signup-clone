@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    #textarea div {
+        @apply fixed transition-all duration-[.7s]
+    }
+
+    #textarea div h1 {
+        @apply text-[7.5vw]
+    }
+
+    #textarea div p {
+        @apply  w-[80vw] text-[4.5vw] font-thin
+    }
+
+    .active {
+        @apply left-[10vw]
+    }
+
+    .ready {
+        @apply left-[93vw] text-weak-green
+    }
+
+    .passive {
+        @apply left-[110vh]
+    }
+
+    .done {
+        @apply left-[-100vw]
+    }
+}

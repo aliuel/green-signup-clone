@@ -1,35 +1,138 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-// import NavBar from './components/NavBar.vue'
-</script>
-
 <template>
   <!-- <NavBar /> -->
-  <div id="wrapper" class=" flex flex-col bg-custom-green h-screen p-[10vw] text-custom-white">
-    <div id="backbutton">
+  <div id="wrapper" class=" flex flex-col bg-custom-green h-screen pt-[10vw] pl-[10vw] text-custom-white">
+    <div @click="back" id="backbutton">
       <img src="./assets/arrow_back_ios_white_24dp.svg" class="h-[7vw] ml-[-2vw]">
     </div>
     <div id="progressbar" class="mt-[5vw] mb-[4vw]">
       <div id="bar" class="absolute w-[33vw] bg-weak-green h-[.8vw]"></div>
-      <div id="progress" class="absolute w-[11vw] bg-custom-white h-[.8vw]"></div>
+      <div ref="bar" id="progress" class="absolute transition-all duration-[.7s] w-[11vw] bg-custom-white h-[.8vw]"></div>
     </div>
-    <div id="textarea">
-      <h1 class=" text-[7.5vw]">What's your e-mail?</h1>
-      <p class=" w-[80vw] text-[4.5vw] font-thin">So we can message you.</p>
+    <div id="textarea" class=" pl-[10vw] ml-[-10vw]">
+      <div ref="mail" id="textmail" class="active">
+        <h1>What's your e-mail?</h1>
+        <p>So we can message you.</p>
+      </div>
+      <div ref="name" id="textname" class=" ready">
+        <h1>And your full name?</h1>
+        <p>Just to be a little more polite.</p>
+      </div>
+      <div ref="pword" id="textpw" class=" passive">
+        <h1>Lastly a password</h1>
+        <p>To keep your account safe</p>
+      </div>
     </div>
-    <div id="input" class="mt-[5vw]">
-      <input type="text" class=" pb-[2px] text-[5vw] leading-[5.5vw] font-normal focus:outline-none bg-transparent border-b-2 border-custom-white w-3/4">
+    <div id="input" class="mt-[21vw]">
+      <input ref="input" v-model="search" type="text" class=" pb-[2px] text-[5vw] leading-[6vw] font-normal focus:outline-none bg-transparent border-b-2 transition-[border] duration-[.2s] border-custom-white w-[80vw]">
+      <p ref="errorp" class=" transition-all duration-[.2s] opacity-0 text-red-700">{{ error }}</p>
     </div>
-    <!-- <div id="continue" class="flex justify-end w-3/4"> -->
-      <button class="bg-weak-green w-max rounded-full p-[1vw] mt-[5vw] fixed bottom-6 right-6">
-        <img src="./assets/arrow_forward_white_24dp.svg" class="h-[9vw]">
-      </button>
-    <!-- </div> -->
+    <button @click="next" class="bg-weak-green w-max rounded-full p-[1vw] mt-[5vw] fixed bottom-6 right-6">
+      <img src="./assets/arrow_forward_white_24dp.svg" class="h-[9vw]">
+    </button>
   </div>
 </template>
 
-<style>
+<script lang="ts">
+import { onMounted, ref } from '@vue/runtime-core';
+import * as EmailValidator from 'email-validator';
+
+export default {
+  name: 'App',
+  setup() {
+    let status = 0 // 0: mail, 1: name, 2:pword
+    const mail = ref(null)
+    const name = ref(null)
+    const pword = ref(null)
+    const bar = ref(null)
+    const input = ref(null)
+    const search = ref('')
+    const error = ref('')
+    const errorp = ref(null)
+
+    let user = {
+      mail: '',
+      name: '',
+      pword: ''
+    }
+
+    // var validator = require("email-validator");
+
+    const next = () => {
+      if (status == 0) {
+        if (EmailValidator.validate(search.value)) {
+          input.value.value = ""
+          user.mail = search.value
+          bar.value.classList.toggle('w-[11vw]')
+          bar.value.classList.toggle('w-[22vw]')
+          mail.value.classList.toggle('active')
+          mail.value.classList.toggle('done')
+          name.value.classList.toggle('ready')
+          name.value.classList.toggle('active')
+          pword.value.classList.toggle('passive')
+          pword.value.classList.toggle('ready')
+          status = 1
+          if (input.value.classList.contains('border-red-700')) {
+            input.value.classList.toggle('border-red-700')
+            errorp.value.classList.toggle('opacity-0')
+            errorp.value.classList.toggle('opacity-100')
+          }
+        } else {
+          error.value = "Invalid address"
+          if (!input.value.classList.contains('border-red-700')) {
+            input.value.classList.toggle('border-red-700')
+            errorp.value.classList.toggle('opacity-0')
+            errorp.value.classList.toggle('opacity-100')
+          }
+        }
+      } else if (status == 1) {
+        bar.value.classList.toggle('w-[22vw]')
+        bar.value.classList.toggle('w-[33vw]')
+        name.value.classList.toggle('active')
+        name.value.classList.toggle('done')
+        pword.value.classList.toggle('ready')
+        pword.value.classList.toggle('active')
+        status = 2
+      } 
+    }
+
+    const back = () => {
+      if (status == 2) {
+        bar.value.classList.toggle('w-[33vw]')
+        bar.value.classList.toggle('w-[22vw]')
+        name.value.classList.toggle('done')
+        name.value.classList.toggle('active')
+        pword.value.classList.toggle('active')
+        pword.value.classList.toggle('ready')
+        status = 1
+      } else if (status == 1) {
+        bar.value.classList.toggle('w-[22vw]')
+        bar.value.classList.toggle('w-[11vw]')
+        mail.value.classList.toggle('done')
+        mail.value.classList.toggle('active')
+        name.value.classList.toggle('active')
+        name.value.classList.toggle('ready')
+        pword.value.classList.toggle('ready')
+        pword.value.classList.toggle('passive')
+        status = 0
+      }
+    }
+  
+    return { 
+      next, 
+      error, 
+      errorp,
+      mail, 
+      input, 
+      name, 
+      pword, 
+      bar, 
+      back, 
+      search }
+  }
+}
+</script>
+
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
 
 * {
