@@ -14,7 +14,7 @@
         <p>So we can message you.</p>
       </div>
       <div ref="name" id="textname" class=" ready">
-        <h1>And your full name?</h1>
+        <h1>And your username?</h1>
         <p>Just to be a little more polite.</p>
       </div>
       <div ref="pword" id="textpw" class=" passive">
@@ -60,7 +60,6 @@ export default {
     const next = () => {
       if (status == 0) {
         if (EmailValidator.validate(search.value)) {
-          input.value.value = ""
           user.mail = search.value
           bar.value.classList.toggle('w-[11vw]')
           bar.value.classList.toggle('w-[22vw]')
@@ -71,32 +70,80 @@ export default {
           pword.value.classList.toggle('passive')
           pword.value.classList.toggle('ready')
           status = 1
-          if (input.value.classList.contains('border-red-700')) {
+          if (user.name) {
+            search.value = user.name
+          } else {
+            search.value = ''
+          }
+          if (input.value.classList.contains('border-red-700')) { // unerror the error
             input.value.classList.toggle('border-red-700')
             errorp.value.classList.toggle('opacity-0')
             errorp.value.classList.toggle('opacity-100')
           }
-        } else {
+        } else { // error
           error.value = "Invalid address"
           if (!input.value.classList.contains('border-red-700')) {
             input.value.classList.toggle('border-red-700')
             errorp.value.classList.toggle('opacity-0')
             errorp.value.classList.toggle('opacity-100')
           }
+          user.mail = ""
         }
       } else if (status == 1) {
-        bar.value.classList.toggle('w-[22vw]')
-        bar.value.classList.toggle('w-[33vw]')
-        name.value.classList.toggle('active')
-        name.value.classList.toggle('done')
-        pword.value.classList.toggle('ready')
-        pword.value.classList.toggle('active')
-        status = 2
-      } 
+        if (search.value.length) {
+          user.name = search.value
+          search.value = ''
+          bar.value.classList.toggle('w-[22vw]')
+          bar.value.classList.toggle('w-[33vw]')
+          name.value.classList.toggle('active')
+          name.value.classList.toggle('done')
+          pword.value.classList.toggle('ready')
+          pword.value.classList.toggle('active')
+          if (input.value.classList.contains('border-red-700')) { // unerror the error
+            input.value.classList.toggle('border-red-700')
+            errorp.value.classList.toggle('opacity-0')
+            errorp.value.classList.toggle('opacity-100')
+          }
+          status = 2
+          input.value.type = 'password'
+        } else {
+          error.value = "Type a username"
+          user.name = ""
+          if (!input.value.classList.contains('border-red-700')) {
+            input.value.classList.toggle('border-red-700')
+            errorp.value.classList.toggle('opacity-0')
+            errorp.value.classList.toggle('opacity-100')
+          }
+        }
+      } else if (status == 2) {
+        if (input.value.classList.contains('border-red-700')) {
+          input.value.classList.toggle('border-red-700')
+          errorp.value.classList.toggle('opacity-0')
+          errorp.value.classList.toggle('opacity-100')
+        }
+        if (search.value.length < 8) {
+          error.value = "Too short"
+          if (!input.value.classList.contains('border-red-700')) {
+            input.value.classList.toggle('border-red-700')
+            errorp.value.classList.toggle('opacity-0')
+            errorp.value.classList.toggle('opacity-100')
+          }
+        } else {
+          user.pword = search.value
+          console.log(user);
+        }
+        console.log(status);
+      }
     }
 
     const back = () => {
       if (status == 2) {
+        search.value = user.name
+        if (input.value.classList.contains('border-red-700')) {
+          input.value.classList.toggle('border-red-700')
+          errorp.value.classList.toggle('opacity-0')
+          errorp.value.classList.toggle('opacity-100')
+        }
         bar.value.classList.toggle('w-[33vw]')
         bar.value.classList.toggle('w-[22vw]')
         name.value.classList.toggle('done')
@@ -104,7 +151,14 @@ export default {
         pword.value.classList.toggle('active')
         pword.value.classList.toggle('ready')
         status = 1
+        input.value.type = 'text'
       } else if (status == 1) {
+        search.value = user.mail
+        if (input.value.classList.contains('border-red-700')) {
+          input.value.classList.toggle('border-red-700')
+          errorp.value.classList.toggle('opacity-0')
+          errorp.value.classList.toggle('opacity-100')
+        }
         bar.value.classList.toggle('w-[22vw]')
         bar.value.classList.toggle('w-[11vw]')
         mail.value.classList.toggle('done')
