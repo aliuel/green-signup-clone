@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { onMounted, ref } from '@vue/runtime-core';
+import { ref } from '@vue/runtime-core';
 import * as EmailValidator from 'email-validator';
 
 export default {
@@ -61,13 +61,10 @@ export default {
       if (status == 0) {
         if (EmailValidator.validate(search.value)) {
           user.mail = search.value
-          if (bar.value.classList.contains('large:w-[7vh]')) {
-            bar.value.classList.toggle('large:w-[7vh]')
-            bar.value.classList.toggle('large:w-[14vh]')
-          } else {
-            bar.value.classList.toggle('w-[11vw]')
-            bar.value.classList.toggle('w-[22vw]')
-          }
+          bar.value.classList.toggle('large:w-[7vh]')
+          bar.value.classList.toggle('large:w-[14vh]')
+          bar.value.classList.toggle('w-[11vw]')
+          bar.value.classList.toggle('w-[22vw]')
           mail.value.classList.toggle('active')
           mail.value.classList.toggle('done')
           name.value.classList.toggle('ready')
@@ -98,13 +95,10 @@ export default {
         if (search.value.length) {
           user.name = search.value
           search.value = ''
-          if (bar.value.classList.contains('large:w-[14vh]')) {
-            bar.value.classList.toggle('large:w-[14vh]')
-            bar.value.classList.toggle('large:w-[21vh]')
-          } else {
-            bar.value.classList.toggle('w-[22vw]')
-            bar.value.classList.toggle('w-[33vw]')
-          }
+          bar.value.classList.toggle('large:w-[14vh]')
+          bar.value.classList.toggle('large:w-[21vh]')
+          bar.value.classList.toggle('w-[22vw]')
+          bar.value.classList.toggle('w-[33vw]')
           name.value.classList.toggle('active')
           name.value.classList.toggle('done')
           pword.value.classList.toggle('ready')
@@ -154,13 +148,10 @@ export default {
           errorp.value.classList.toggle('opacity-0')
           errorp.value.classList.toggle('opacity-100')
         }
-        if (bar.value.classList.contains('large:w-[21vh]')) {
-          bar.value.classList.toggle('large:w-[21vh]')
-          bar.value.classList.toggle('large:w-[14vh]')
-        } else {
-          bar.value.classList.toggle('w-[33vw]')
-          bar.value.classList.toggle('w-[22vw]')
-        }
+        bar.value.classList.toggle('large:w-[21vh]')
+        bar.value.classList.toggle('large:w-[14vh]')
+        bar.value.classList.toggle('w-[33vw]')
+        bar.value.classList.toggle('w-[22vw]')
         name.value.classList.toggle('done')
         name.value.classList.toggle('active')
         pword.value.classList.toggle('active')
@@ -174,13 +165,10 @@ export default {
           errorp.value.classList.toggle('opacity-0')
           errorp.value.classList.toggle('opacity-100')
         }
-        if (bar.value.classList.contains('large:w-[14vh]')) {
-          bar.value.classList.toggle('large:w-[14vh]')
-          bar.value.classList.toggle('large:w-[7vh]')
-        } else {
-          bar.value.classList.toggle('w-[22vw]')
-          bar.value.classList.toggle('w-[11vw]')
-        }
+        bar.value.classList.toggle('large:w-[14vh]')
+        bar.value.classList.toggle('large:w-[7vh]')
+        bar.value.classList.toggle('w-[22vw]')
+        bar.value.classList.toggle('w-[11vw]')
         mail.value.classList.toggle('done')
         mail.value.classList.toggle('active')
         name.value.classList.toggle('active')
